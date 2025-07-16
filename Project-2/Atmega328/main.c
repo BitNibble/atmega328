@@ -27,7 +27,6 @@ Created:  20/04/2023 14:00:00
 #define TRUE 1
 #define ZERO 0
 
-LCD02P lcd;
 PCF8563RTC rtc;
 struct time tm; // time struct RTC
 struct date dt; // date struct RTC
@@ -42,30 +41,30 @@ rtc = pcf8563rtc_enable(16); // RTC with I2C
 
 for ( ; TRUE; ) // Looping
 {
-	lcd.reboot();
+	lcd02p()->reboot();
 	
 	tm=rtc.GetTime();
 	dt=rtc.GetDate();
-	lcd.gotoxy(0,0);
-	lcd.string_size("S:",3);
-	lcd.gotoxy(0,8);
-	lcd.string_size(func()->ui16toa(rtc.bcd2dec(dt.days)),2);
-	lcd.putch(':');
-	lcd.string_size(func()->ui16toa(rtc.bcd2dec(dt.century_months)),2);
-	lcd.putch(':');
-	lcd.string_size(func()->ui16toa(rtc.bcd2dec(dt.years)),2);
-	lcd.gotoxy(1,8);
-	lcd.string_size(func()->ui16toa(rtc.bcd2dec(tm.hours)),2);
-	lcd.putch(':');
-	lcd.string_size(func()->ui16toa(rtc.bcd2dec(tm.minutes)),2);
-	lcd.putch(':');
-	lcd.string_size(func()->ui16toa(rtc.bcd2dec(tm.VL_seconds)),2);
+	lcd02p()->gotoxy(0,0);
+	lcd02p()->string_size("S:",3);
+	lcd02p()->gotoxy(0,8);
+	lcd02p()->string_size(func()->ui16toa(rtc.bcd2dec(dt.days)),2);
+	lcd02p()->putch(':');
+	lcd02p()->string_size(func()->ui16toa(rtc.bcd2dec(dt.century_months)),2);
+	lcd02p()->putch(':');
+	lcd02p()->string_size(func()->ui16toa(rtc.bcd2dec(dt.years)),2);
+	lcd02p()->gotoxy(1,8);
+	lcd02p()->string_size(func()->ui16toa(rtc.bcd2dec(tm.hours)),2);
+	lcd02p()->putch(':');
+	lcd02p()->string_size(func()->ui16toa(rtc.bcd2dec(tm.minutes)),2);
+	lcd02p()->putch(':');
+	lcd02p()->string_size(func()->ui16toa(rtc.bcd2dec(tm.VL_seconds)),2);
 	
 	
-	//lcd.gotoxy(0,0);
-	//lcd.string_size("Welcome", 15);
-	//lcd.gotoxy(1,0);
-	//lcd.string_size( func()->ui16toa(count), 6 );
+	//lcd02p()->gotoxy(0,0);
+	//lcd02p()->string_size("Welcome", 15);
+	//lcd02p()->gotoxy(1,0);
+	//lcd02p()->string_size( func()->ui16toa(count), 6 );
 	
 	
 }}

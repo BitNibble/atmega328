@@ -18,7 +18,7 @@ Date:     12072025
 #include <inttypes.h>
 
 /*** Constant & Macro ***/
-#define LCD_WIRING_1
+#define LCD_WIRING_3
 #if defined(LCD_WIRING_1)
 	#define LCD02P_RS 0
 	#define LCD02P_RW 1
@@ -50,6 +50,7 @@ Date:     12072025
 
 /*** Handler ***/
 typedef struct{
+	// V-table
 	void (*write)(char c, unsigned short D_I);
 	char (*read)(unsigned short D_I);
 	uint8_t (*BF)(void);
@@ -62,10 +63,10 @@ typedef struct{
 	void (*gotoxy)(unsigned int y, unsigned int x);
 	void (*reboot)(void);
 	int (*printf)(const char *fmt, ...);
-}LCD02P;
+}LCD02P_Handler;
 
 void lcd02p_enable(volatile uint8_t *cmdddr, volatile uint8_t *cmdpin, volatile uint8_t *cmdport, volatile uint8_t *dataddr, volatile uint8_t *datapin, volatile uint8_t *dataport);
-LCD02P* lcd02p(void);
+LCD02P_Handler* lcd02p(void);
 
 #endif
 /*** EOF ***/

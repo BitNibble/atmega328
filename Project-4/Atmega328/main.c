@@ -30,8 +30,6 @@ Created:  27/01/2024 14:00:00
 #define TRUE 1
 #define FALSE 0
 
-LCD02P lcd;
-
 char* uart_receive = NULL; // pointing to Rx Buffer raw
 char uart_oneshot[UART0_RX_BUFFER_SIZE];
 char uart_msg[UART0_RX_BUFFER_SIZE];

@@ -5,17 +5,17 @@ License:  GNU General Public License
 Hardware: all
 Date:     04072025              
 ************************************************************************/
-/*** File Library ***/
+/*** Library ***/
 #include "lcd.h"
 #include <util/delay.h>
 #include <stdio.h>
 
-/*** File Constant & Macro ***/
+/*** Constant & Macro ***/
 // CMD RS
 #define INST 0
 #define DATA 1
 
-/*** File Variable ***/
+/*** Variable ***/
 volatile uint8_t *lcd0_DDR;
 volatile uint8_t *lcd0_PIN;
 volatile uint8_t *lcd0_PORT;
@@ -66,7 +66,8 @@ static FILE lcd1_stdout;
 static int lcd0_putchar(char c, FILE *stream);
 static int lcd1_putchar(char c, FILE *stream);
 
-static LCD0 lcd0_setup = {
+/*** Internal State ***/
+static LCD0_Handler lcd0_setup = {
 	// V-table
 	.write = LCD0_write,
 	.read = LCD0_read,
@@ -81,7 +82,7 @@ static LCD0 lcd0_setup = {
 	.reboot = LCD0_reboot,
 	.printf = printf
 };
-static LCD1 lcd1_setup = {
+static LCD1_Handler lcd1_setup = {
 	// V-table
 	.write = LCD1_write,
 	.read = LCD1_read,
@@ -115,7 +116,7 @@ void lcd0_enable(volatile uint8_t *ddr, volatile uint8_t *pin, volatile uint8_t 
 	stdout = &lcd0_stdout;  // Redirect printf to the LCD
 }
 
-LCD0* lcd0(void){ return &lcd0_setup; }
+LCD0_Handler* lcd0(void){ return &lcd0_setup; }
 
 /*** Procedure & Function definition ***/
 void LCD0_inic(void)
@@ -284,7 +285,7 @@ int lcd0_putchar(char c, FILE *stream) {
 	return 0;
 }
 
-// LCD 1
+/*** Handler ***/
 void lcd1_enable(volatile uint8_t *ddr, volatile uint8_t *pin, volatile uint8_t *port)
 {
 	// import parameters
@@ -302,8 +303,9 @@ void lcd1_enable(volatile uint8_t *ddr, volatile uint8_t *pin, volatile uint8_t 
 	stdout = &lcd1_stdout;  // Redirect printf to the LCD
 }
 
-LCD1* lcd1(void){ return &lcd1_setup; }
+LCD1_Handler* lcd1(void){ return &lcd1_setup; }
 
+/*** Procedure & Function definition ***/
 void LCD1_inic(void)
 {
 	// LCD INIC

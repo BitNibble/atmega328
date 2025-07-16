@@ -32,7 +32,7 @@ typedef struct {
 	uint8_t col;
 } LCDx_Pos;
 
-/*** Procedure and Function declaration ***/
+/*** Procedure & Function declaration ***/
 void LCD02P_inic(void);
 void LCD02P_write(char c, unsigned short D_I);
 char LCD02P_read(unsigned short D_I);
@@ -52,7 +52,8 @@ static FILE lcd02p_stdout;
 
 static int lcd02p_putchar(char c, FILE *stream);
 
-static LCD02P setup_lcd02p = {
+/*** Internal State ***/
+static LCD02P_Handler setup_lcd02p = {
 	// V-table
 	.write = LCD02P_write,
 	.read = LCD02P_read,
@@ -86,9 +87,9 @@ void lcd02p_enable(volatile uint8_t *cmdddr, volatile uint8_t *cmdpin, volatile 
 	stdout = &lcd02p_stdout;  // Redirect printf to the LCD
 }
 
-LCD02P* lcd02p(void){ return &setup_lcd02p; }
+LCD02P_Handler* lcd02p(void){ return &setup_lcd02p; }
 
-/*** Procedure and Function definition ***/
+/*** Procedure & Function definition ***/
 void LCD02P_inic(void)
 {
 	// LCD INIC

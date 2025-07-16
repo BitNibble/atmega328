@@ -53,7 +53,6 @@ Update:   22/01/2024
 
 /*** File Variable ***/
 HC595 sh;
-LCD02P lcd;
 EXPLODE button;
 EXPLODE disp;
 
@@ -144,7 +143,7 @@ for (window = 0, menu = 1; TRUE; )
 {
 	// 0
 	if(!window){ // Loop preamble
-		lcd.reboot();
+		lcd02p()->reboot();
 		
 		input = ( gpioc_reg()->pin.var & 0xF0 ) | get_reg_block( gpiob_reg()->pin.var, 4, 4 );
 		button.update(&button.par, input);
@@ -159,7 +158,7 @@ for (window = 0, menu = 1; TRUE; )
 	if(window == 1){ // procedures
 		switch(menu){ // MENU
 			case 1: // Main Program Menu 1
-				if((disp.par.HL & (1 << 2))){lcd.clear();menu = 2;}
+				if((disp.par.HL & (1 << 2))){lcd02p()->clear();menu = 2;}
 				else{
 					lcd02p()->gotoxy(0,0);
 					lcd02p()->putch(':'); 
@@ -169,7 +168,7 @@ for (window = 0, menu = 1; TRUE; )
 				}
 				break;
 			case 2: // Main Program Menu 2
-				if((disp.par.HL & (1 << 2))){lcd.clear();menu = 3;}
+				if((disp.par.HL & (1 << 2))){lcd02p()->clear();menu = 3;}
 				else{
 					lcd02p()->gotoxy(0,0);
 					lcd02p()->hspace(4); lcd02p()->string_size("Welcome",7);
@@ -178,10 +177,10 @@ for (window = 0, menu = 1; TRUE; )
 				}
 			break;
 			case 3: // Main Program Menu 3
-				if((disp.par.HL & (1 << 2))){lcd.clear();menu = 4;}
+				if((disp.par.HL & (1 << 2))){lcd02p()->clear();menu = 4;}
 				else{
 					lcd02p()->gotoxy(0,0);
-					lcd02p()->hspace(4); lcd.string_size("bt05 ->",7);
+					lcd02p()->hspace(4); lcd02p()->string_size("bt05 ->",7);
 					if((disp.par.HL & (1 << 3)))
 					{
 						usart0()->puts(bt05at_cmd(2));
